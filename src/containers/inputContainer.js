@@ -7,7 +7,7 @@ import Board from "../components/Board";
 class Input extends Component {
   state = {
     coordinates: "a1",
-    piece: "bishop",
+    piece: "knight",
     result: ""
   };
 

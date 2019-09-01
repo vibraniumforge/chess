@@ -6,8 +6,8 @@ const Board = ({ piece, coordinate }) => {
       <table>
         <tbody id="chess-board">
           <tr>
-            <td id="a8" className="white-square"></td>
-            <td id="b8" className="black-square"></td>
+            <td id="a8" className="white-square "></td>
+            <td id="b8" className="black-square "></td>
             <td id="c8" className="white-square"></td>
             <td id="d8" className="black-square"></td>
             <td id="e8" className="white-square"></td>

@@ -54,3 +54,7 @@ table {
   border-spacing: 0px;
   border: 30px solid sienna;
 }
+
+.red {
+  background-color: palevioletred;
+}
