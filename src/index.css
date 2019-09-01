@@ -36,7 +36,7 @@ li {
 }
 
 .black-square {
-  background-color: black;
+  background-color: dimgray;
   width: 70px;
   height: 70px;
   padding: 0px;
@@ -53,6 +53,7 @@ table {
   margin: auto;
   border-spacing: 0px;
   border: 30px solid sienna;
+  font-size: 40px;
 }
 
 .red {
