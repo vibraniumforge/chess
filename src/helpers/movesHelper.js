@@ -85,9 +85,7 @@ function rookMoves(str) {
   console.log(possibleRookMoves);
   possibleRookMoves.map(move => x.push(convertArrayToChessNotation(move)));
   return x.filter(move => {
-    return !move.every(function(value, index) {
-      return value === rookPosition[index];
-    });
+    return move !== str;
   });
 }
 

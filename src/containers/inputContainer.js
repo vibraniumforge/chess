@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { convertChessNotationToArray } from "../helpers/convertChessToArray.js";
-import { convertArrayToChessNotation } from "../helpers/convertArrayToChess.js";
+// import { convertChessNotationToArray } from "../helpers/convertChessToArray.js";
+// import { convertArrayToChessNotation } from "../helpers/convertArrayToChess.js";
 import { movesHelper } from "../helpers/movesHelper.js";
+import Board from "../components/Board";
+
 class Input extends Component {
   state = {
-    coordinatesInput: "",
-    piece: "",
+    coordinates: "a1",
+    piece: "bishop",
     result: ""
   };
 
@@ -15,7 +17,7 @@ class Input extends Component {
 
   handleOnSubmit = e => {
     e.preventDefault();
-    const x = movesHelper(this.state.piece, this.state.coordinatesInput);
+    const x = movesHelper(this.state.piece, this.state.coordinates);
     // this.reset();
     this.setState(prevState => ({
       result: [...prevState.result, x]
@@ -23,12 +25,10 @@ class Input extends Component {
   };
 
   reset = () => {
-    this.setState({ coordinatesInput: "", piece: "", result: "" });
+    this.setState({ coordinates: "", piece: "", result: "" });
   };
 
   render() {
-    const piece = this.state.piece;
-    const coord = this.state.coordinatesInput;
     let result;
     if (this.state.result) {
       result = this.state.result[0].map((move, index) => {
@@ -41,8 +41,8 @@ class Input extends Component {
           <form onSubmit={this.handleOnSubmit}>
             <input
               type="text"
-              name="coordinatesInput"
-              value={this.state.coordinatesInput}
+              name="coordinates"
+              value={this.state.coordinates}
               onChange={this.handleOnChange}
               placeholder="Chess coordinates here."
             />
@@ -65,11 +65,14 @@ class Input extends Component {
             </button>
           </form>
           <p>
-            The {piece ? piece : "____"} at {coord ? coord : "__"} can move to{" "}
+            The {this.state.piece ? this.state.piece : "____"} at{" "}
+            {this.state.coordinates ? this.state.coordinates : "__"} can move to{" "}
           </p>
           <ul>{result}</ul>
         </div>
-        <div></div>
+        <div id="board">
+          <Board piece={this.state.piece} coordinates={this.state.cordinates} />
+        </div>
       </React.Fragment>
     );
   }

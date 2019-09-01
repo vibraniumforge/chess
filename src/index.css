@@ -24,3 +24,33 @@ select {
 li {
   list-style-type: none;
 }
+
+.white-square {
+  background-color: white;
+  /* width: 10%;
+  height: 10%; */
+  width: 70px;
+  height: 70px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.black-square {
+  background-color: black;
+  width: 70px;
+  height: 70px;
+  padding: 0px;
+  margin: 0px;
+}
+
+#board {
+  text-align: center;
+  width: auto;
+  height: auto;
+}
+
+table {
+  margin: auto;
+  border-spacing: 0px;
+  border: 30px solid sienna;
+}
