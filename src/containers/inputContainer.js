@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-// import { convertChessNotationToArray } from "../helpers/convertChessToArray.js";
-// import { convertArrayToChessNotation } from "../helpers/convertArrayToChess.js";
 import { movesHelper } from "../helpers/movesHelper.js";
 import Board from "../components/Board";
+// import FullBoard from "../components/FullBoard";
 
 class Input extends Component {
   state = {
     coordinates: "a1",
-    piece: "knight",
-    result: ""
+    piece: "queen",
+    result: []
   };
 
   handleOnChange = e => {
@@ -18,20 +17,21 @@ class Input extends Component {
   handleOnSubmit = e => {
     e.preventDefault();
     const x = movesHelper(this.state.piece, this.state.coordinates);
+    console.log(x);
     // this.reset();
     this.setState(prevState => ({
-      result: [...prevState.result, x]
+      result: x
     }));
   };
 
   reset = () => {
-    this.setState({ coordinates: "", piece: "", result: "" });
+    this.setState({ coordinates: "", piece: "", result: [] });
   };
 
   render() {
     let result;
-    if (this.state.result) {
-      result = this.state.result[0].map((move, index) => {
+    if (this.state.result !== []) {
+      result = this.state.result.map((move, index) => {
         return <li key={index}>{move}</li>;
       });
     }
@@ -71,7 +71,11 @@ class Input extends Component {
           <ul>{result}</ul>
         </div>
         <div id="board">
-          <Board piece={this.state.piece} coordinates={this.state.cordinates} />
+          <Board
+            piece={this.state.piece}
+            coordinates={this.state.coordinates}
+            result={this.state.result}
+          />
         </div>
       </React.Fragment>
     );
