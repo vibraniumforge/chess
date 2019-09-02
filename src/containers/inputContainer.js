@@ -5,8 +5,8 @@ import Board from "../components/Board";
 
 class Input extends Component {
   state = {
-    coordinates: "a1",
-    piece: "queen",
+    coordinates: "",
+    piece: "king",
     result: []
   };
 
@@ -16,12 +16,11 @@ class Input extends Component {
 
   handleOnSubmit = e => {
     e.preventDefault();
-    const x = movesHelper(this.state.piece, this.state.coordinates);
-    console.log(x);
+    const movesResult = movesHelper(this.state.piece, this.state.coordinates);
     // this.reset();
-    this.setState(prevState => ({
-      result: x
-    }));
+    this.setState({
+      result: movesResult
+    });
   };
 
   reset = () => {
@@ -29,12 +28,12 @@ class Input extends Component {
   };
 
   render() {
-    let result;
-    if (this.state.result !== []) {
-      result = this.state.result.map((move, index) => {
-        return <li key={index}>{move}</li>;
-      });
-    }
+    // let result;
+    // if (this.state.result !== []) {
+    //   result = this.state.result.map((move, index) => {
+    //     return <li key={index}>{move}</li>;
+    //   });
+    // }
     return (
       <React.Fragment>
         <div id="input">
@@ -57,7 +56,8 @@ class Input extends Component {
               <option value="rook">Rook</option>
               <option value="bishop">Bishop</option>
               <option value="knight">Knight</option>
-              <option value="pawn">Pawn</option>
+              <option value="whitepawn">White Pawn</option>
+              <option value="blackpawn">Black Pawn</option>
             </select>
             <input type="submit" value="Submit" />
             <button type="button" onClick={this.reset}>
@@ -66,9 +66,10 @@ class Input extends Component {
           </form>
           <p>
             The {this.state.piece ? this.state.piece : "____"} at{" "}
-            {this.state.coordinates ? this.state.coordinates : "__"} can move to{" "}
+            {this.state.coordinates ? this.state.coordinates : "__"} can move
+            to:{" "}
           </p>
-          <ul>{result}</ul>
+          <ul>{this.state.result.join(", ")}</ul>
         </div>
         <div id="board">
           <Board
