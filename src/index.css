@@ -52,10 +52,16 @@ li {
 table {
   margin: auto;
   border-spacing: 0px;
-  border: 30px solid sienna;
-  font-size: 40px;
+  border: 1px solid sienna;
+  font-size: 48px;
 }
 
-.red {
+.selected {
   background-color: palevioletred;
+}
+
+.border {
+  width: 70px;
+  height: 70px;
+  background-color: sienna;
 }
