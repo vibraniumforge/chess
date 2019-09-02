@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import { pieceHelper } from "../helpers/pieceHelper.js";
 
 class Board extends Component {
-  componentDidMount() {
-    console.log(this.props.piece);
-    console.log(this.props.coordinates);
+  colorTheSqaures = () => {
     console.log(this.props.result);
-  }
+    this.props.result.forEach(square => {
+      document.getElementById(square).classList.add("selected");
+    });
+  };
 
   render() {
     if (
-      this.props.coordinates !== "" &&
+      this.props.coordinates.length === 2 &&
       this.props.coordinates &&
       this.props.result !== [] &&
       this.props.result.length &&
@@ -18,13 +19,25 @@ class Board extends Component {
       this.props.piece !== "" &&
       this.props.piece
     ) {
-      let x = document.getElementById(this.props.coordinates);
-      console.log(x);
-      x.innerHTML = pieceHelper(this.props.piece);
+      let selectedSquare = document.getElementById(this.props.coordinates);
+      selectedSquare.innerHTML = pieceHelper(this.props.piece);
+      this.colorTheSqaures();
     }
     return (
       <React.Fragment>
         <table>
+          <thead>
+            <tr>
+              <td>a</td>
+              <td>b</td>
+              <td>c</td>
+              <td>d</td>
+              <td>e</td>
+              <td>f</td>
+              <td>g</td>
+              <td>h</td>
+            </tr>
+          </thead>
           <tbody id="chess-board">
             <tr>
               <td id="a8" className="white-square"></td>
@@ -107,6 +120,18 @@ class Board extends Component {
               <td id="h1" className="white-square"></td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <td>a</td>
+              <td>b</td>
+              <td>c</td>
+              <td>d</td>
+              <td>e</td>
+              <td>f</td>
+              <td>g</td>
+              <td>h</td>
+            </tr>
+          </tfoot>
         </table>
       </React.Fragment>
     );
