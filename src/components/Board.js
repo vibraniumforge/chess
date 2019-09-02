@@ -2,11 +2,29 @@ import React, { Component } from "react";
 import { pieceHelper } from "../helpers/pieceHelper.js";
 
 class Board extends Component {
+  uncolorTheSquares = () => {
+    let coloredSqaures = document.getElementsByClassName("selected");
+    let coloredSqauresArray = Array.from(coloredSqaures);
+    coloredSqauresArray.forEach(square => {
+      square.classList.remove("selected");
+    });
+  };
+
+  removePiece = () => {
+    const selectedSquare = document.getElementById(this.props.coordinates);
+    return selectedSquare ? (selectedSquare.innerHTML = "") : null;
+  };
+
   colorTheSqaures = () => {
     console.log(this.props.result);
     this.props.result.forEach(square => {
       document.getElementById(square).classList.add("selected");
     });
+  };
+
+  addPiece = () => {
+    let selectedSquare = document.getElementById(this.props.coordinates);
+    selectedSquare.innerHTML = pieceHelper(this.props.piece);
   };
 
   render() {
@@ -19,9 +37,10 @@ class Board extends Component {
       this.props.piece !== "" &&
       this.props.piece
     ) {
-      let selectedSquare = document.getElementById(this.props.coordinates);
-      selectedSquare.innerHTML = pieceHelper(this.props.piece);
+      this.uncolorTheSquares();
+      this.removePiece();
       this.colorTheSqaures();
+      this.addPiece();
     }
     return (
       <React.Fragment>
