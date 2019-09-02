@@ -10,8 +10,10 @@ const pieceHelper = piece => {
       return "&#9815;";
     case "knight":
       return "&#9816;";
-    case "pawn":
+    case "whitepawn":
       return "&#9817;";
+    case "blackpawn":
+      return "&#9823;";
     default:
       return null;
   }
