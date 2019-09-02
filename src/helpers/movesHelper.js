@@ -10,8 +10,10 @@ const movesHelper = (piece, coordinates) => {
       return bishopMoves(coordinates);
     case "knight":
       return knightMoves(coordinates);
-    case "pawn":
-      return pawnMoves(coordinates);
+    case "whitepawn":
+      return whitePawnMoves(coordinates);
+    case "blackpawn":
+      return blackPawnMoves(coordinates);
     default:
       return null;
   }
@@ -26,40 +28,52 @@ const convertChessNotationToArray = str => {
   const horizontalCoordinate = convertHorizontalObject[str.split("")[0]];
   const verticalCoordinate = convertVerticalObject[str.split("")[1]];
   arrayNotationArray.push(verticalCoordinate, horizontalCoordinate);
+  // horizontal and vertical are switched above.
+  console.log(arrayNotationArray);
   return arrayNotationArray;
 };
 
 const convertArrayToChessNotation = array => {
+  // [0,0] => "a8", [7,0] => "a1", [0,7] => "h8", [7,7] => "h1"
+  // [7,0] is vertical 7 horiz 0. It goes to horizontal "a" vertical "1"
+  const arrayVerticalCoordinate = array[0];
+  const arrayHorizontalCoordinate = array[1];
+  // horizontal and vertical are switched here.
   //   prettier-ignore
-  const convertHorizontalObject = { 7: "a", 6: "b", 5: 'c', 4: "d", 3: "e", 2: "f", 1: "g", 0: "h" };
+  const convertVerticalObject = {0: "8", 1: "7", 2: "6", 3: "5", 4: "4", 5: "3", 6: "2", 7: "1"}
   //   prettier-ignore
-  const convertVerticalObject = {0: "1", 1: "2", 2: "3", 3: "4", 4: "5", 5: "6", 6: "7", 7: "8"}
-  const horizontalCoordinate = convertHorizontalObject[array[0]];
-  const verticalCoordinate = convertVerticalObject[array[1]];
+  const convertHorizontalObject = { 0: "a", 1: "b", 2: 'c', 3: "d", 4: "e", 5: "f", 6: "g", 7: "h" };
+  const horizontalCoordinate =
+    convertHorizontalObject[arrayHorizontalCoordinate];
+  const verticalCoordinate = convertVerticalObject[arrayVerticalCoordinate];
+  console.log(array);
+  console.log(arrayVerticalCoordinate);
+  console.log(arrayHorizontalCoordinate);
+  console.log(horizontalCoordinate);
+  console.log(verticalCoordinate);
+
   const result = `${horizontalCoordinate}${verticalCoordinate}`;
+  console.log(result);
+  console.log("=================================");
   return result;
 };
 
 function kingMoves(str) {
   const kingPosition = convertChessNotationToArray(str);
+  console.log(kingPosition);
   let moves = [];
-  for (let i = kingPosition[0] - 1; i <= kingPosition[0] + 1; i++) {
-    for (let j = kingPosition[1] - 1; j <= kingPosition[1] + 1; j++) {
-      moves.push([i, j]);
-    }
-  }
+  moves.push([kingPosition[0] - 1, kingPosition[1] - 1]);
+  moves.push([kingPosition[0] - 1, kingPosition[1]]);
+  moves.push([kingPosition[0] - 1, kingPosition[1] + 1]);
+  moves.push([kingPosition[0], kingPosition[1] - 1]);
+  moves.push([kingPosition[0], kingPosition[1] + 1]);
+  moves.push([kingPosition[0] + 1, kingPosition[1] - 1]);
+  moves.push([kingPosition[0] + 1, kingPosition[1]]);
+  moves.push([kingPosition[0] + 1, kingPosition[1] + 1]);
+  console.log(moves);
   let x = moves.filter(move => {
-    return (
-      move[0] >= 0 &&
-      move[0] <= 7 &&
-      move[1] >= 0 &&
-      move[1] <= 7 &&
-      !move.every(function(value, index) {
-        return value === kingPosition[index];
-      })
-    );
+    return move[0] >= 0 && move[0] <= 7 && move[1] >= 0 && move[1] <= 7;
   });
-  console.log(x);
   let possibleKingMoves = [];
   x.map(move => possibleKingMoves.push(convertArrayToChessNotation(move)));
   console.log(possibleKingMoves);
@@ -70,8 +84,7 @@ function queenMoves(str) {
   let possibleQueenMoves = [];
   const possibleRookMoves = rookMoves(str);
   const possibleBishopMoves = bishopMoves(str);
-  const x = possibleRookMoves.concat(possibleBishopMoves);
-  possibleQueenMoves.push(x);
+  possibleQueenMoves = possibleRookMoves.concat(possibleBishopMoves);
   console.log(possibleQueenMoves);
   return possibleQueenMoves;
 }
@@ -137,39 +150,52 @@ function bishopMoves(str) {
   let possibleBishopMoves = x.filter(pbm => {
     return pbm !== str;
   });
-  //   console.log(possibleBishopMoves);
+  console.log(possibleBishopMoves);
   return possibleBishopMoves;
 }
 
 function knightMoves(str) {
   const knightPosition = convertChessNotationToArray(str);
   let moves = [];
-  const horizCoord = knightPosition[0];
-  const vertCoord = knightPosition[1];
-  moves.push([horizCoord + 1, vertCoord + 2]);
-  moves.push([horizCoord + 1, vertCoord + 1]);
-  moves.push([horizCoord + 2, vertCoord - 1]);
-  moves.push([horizCoord + 1, vertCoord - 2]);
-  moves.push([horizCoord - 1, vertCoord - 2]);
-  moves.push([horizCoord - 2, vertCoord - 1]);
-  moves.push([horizCoord - 2, vertCoord + 1]);
-  moves.push([horizCoord - 1, vertCoord + 2]);
-  console.log(moves);
+  const vertCoord = knightPosition[0];
+  const horizCoord = knightPosition[1];
+
+  console.log("knightPosition=", knightPosition);
+  console.log("horizCoord=", horizCoord);
+  console.log("vertCoord=", vertCoord);
+  moves.push([vertCoord - 2, horizCoord + 1]);
+  moves.push([vertCoord - 1, horizCoord + 2]);
+  moves.push([vertCoord + 1, horizCoord + 2]);
+  moves.push([vertCoord + 2, horizCoord + 1]);
+  moves.push([vertCoord + 2, horizCoord - 1]);
+  moves.push([vertCoord + 1, horizCoord - 2]);
+  moves.push([vertCoord - 1, horizCoord - 2]);
+  moves.push([vertCoord - 2, horizCoord - 1]);
   let possibleKnightmoves = [];
+  console.log(moves);
   moves.map(pkm => {
-    if (pkm[0] > 0 && pkm[0] < 7 && pkm[1] > 0 && pkm[1] < 7) {
-      return possibleKnightmoves.push(pkm);
-    }
+    return pkm[0] >= 0 && pkm[0] <= 7 && pkm[1] >= 0 && pkm[1] <= 7
+      ? possibleKnightmoves.push(pkm)
+      : null;
   });
   console.log(possibleKnightmoves);
   return possibleKnightmoves.map(move => convertArrayToChessNotation(move));
 }
 
-function pawnMoves(str) {
+function whitePawnMoves(str) {
   const pawnPosition = convertChessNotationToArray(str);
   let possiblePawnMoves = [];
-  possiblePawnMoves.push([pawnPosition[0], pawnPosition[1] + 1]);
-  return possiblePawnMoves;
+  possiblePawnMoves.push([pawnPosition[0] - 1, pawnPosition[1]]);
+  console.log(possiblePawnMoves);
+  return possiblePawnMoves.map(move => convertArrayToChessNotation(move));
+}
+
+function blackPawnMoves(str) {
+  const pawnPosition = convertChessNotationToArray(str);
+  let possiblePawnMoves = [];
+  possiblePawnMoves.push([pawnPosition[0] + 1, pawnPosition[1]]);
+  console.log(possiblePawnMoves);
+  return possiblePawnMoves.map(move => convertArrayToChessNotation(move));
 }
 
 export { movesHelper };
