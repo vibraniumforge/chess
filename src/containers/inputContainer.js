@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import { movesHelper } from "../helpers/movesHelper.js";
 import Board from "../components/Board";
+import { checkHelper } from "../helpers/checkHelper.js";
+import { checkMateHelper } from "../helpers/checkMateHelper.js";
 // import FullBoard from "../components/FullBoard";
 
 class Input extends Component {
   state = {
-    piece1Name: "rook",
-    piece1Coordinates: "b5",
+    piece1Name: "",
+    piece1Coordinates: "",
     piece1Result: [],
-    piece2Name: "knight",
-    piece2Coordinates: "a6",
+    piece2Name: "",
+    piece2Coordinates: "",
     piece2Result: [],
-    kingCoordinates: "a8",
+    kingCoordinates: "",
     kingResults: [],
-    checkMate: ""
+    kingIsChecked: null,
+    kingIsCheckMated: null
   };
 
   handleOnChange = e => {
@@ -47,41 +50,18 @@ class Input extends Component {
   };
 
   checkmate = () => {
-    console.log("checkmate fires");
-    console.log("this.state=", this.state);
     const kingCoordinates = this.state.kingCoordinates.slice();
     const kingResults = this.state.kingResults.slice();
     const piece1Results = [...this.state.piece1Result];
     const piece2Results = [...this.state.piece2Result];
     const allAttacks = piece1Results.concat(piece2Results);
-    console.log("kingCoordinates=", kingCoordinates);
-    console.log("kingResults=", kingResults);
-    console.log("allAttacks=", allAttacks);
     let kingCoordinates2 = kingCoordinates.slice();
-    let kingIsCheck = false;
-    let kingIsCheckmated = false;
+
     if (kingCoordinates2) {
-      //   const intersection = kingResults.filter(element =>
-      //     allAttacks.includes(element)
-      //   );
-      console.log("kingCoordinates2=", kingCoordinates2);
-      for (let i = 0; i < allAttacks.length; i++) {
-        if (kingCoordinates2 === allAttacks[i]) {
-          kingIsCheck = true;
-        }
-      }
-
-      let filter = kingResults.filter(kr => {
-        return allAttacks.includes(kr);
+      this.setState({
+        kingIsChecked: checkHelper(kingCoordinates2, allAttacks),
+        kingIsCheckMated: checkMateHelper(kingResults, allAttacks)
       });
-      if (filter.length === kingResults.length) {
-        kingIsCheckmated = true;
-      }
-
-      console.log("kingIsCheched=", kingIsCheck);
-      console.log("filter=", filter);
-      console.log("kingIsCheckmated=", kingIsCheckmated);
-      this.setState({ checkMate: "hi" });
     }
   };
 
@@ -103,7 +83,10 @@ class Input extends Component {
     console.log(horiz);
     console.log(vert);
     console.log(randomPiece);
-    this.setState({ coordinates: `${horiz}${vert}`, piece: randomPiece });
+    this.setState({
+      piece1Name: randomPiece,
+      piece1Coordinates: `${horiz}${vert}`
+    });
   };
 
   reset = () => {
@@ -111,12 +94,6 @@ class Input extends Component {
   };
 
   render() {
-    // let result;
-    // if (this.state.result !== []) {
-    //   result = this.state.result.map((move, index) => {
-    //     return <li key={index}>{move}</li>;
-    //   });
-    // }
     return (
       <React.Fragment>
         <section className="container">
@@ -203,7 +180,18 @@ class Input extends Component {
                 ? this.state.piece2Result.join(", ")
                 : null}
             </p>
-            <p>{this.state.checkMate}</p>
+            <p>
+              King is checked:{" "}
+              {this.state.kingIsChecked
+                ? this.state.kingIsChecked.toString()
+                : "false"}
+            </p>
+            <p>
+              Checkmate?{" "}
+              {this.state.kingIsCheckMated
+                ? this.state.kingIsCheckMated.toString()
+                : "false"}
+            </p>
           </div>
 
           <div id="board">
