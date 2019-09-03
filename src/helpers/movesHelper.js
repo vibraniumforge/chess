@@ -1,6 +1,8 @@
 const movesHelper = (piece, coordinates) => {
   switch (piece) {
-    case "king":
+    case "whiteking":
+      return kingMoves(coordinates);
+    case "blackking":
       return kingMoves(coordinates);
     case "queen":
       return queenMoves(coordinates);
@@ -29,7 +31,6 @@ const convertChessNotationToArray = str => {
   const verticalCoordinate = convertVerticalObject[str.split("")[1]];
   arrayNotationArray.push(verticalCoordinate, horizontalCoordinate);
   // horizontal and vertical are switched above.
-  console.log(arrayNotationArray);
   return arrayNotationArray;
 };
 
@@ -47,13 +48,11 @@ const convertArrayToChessNotation = array => {
     convertHorizontalObject[arrayHorizontalCoordinate];
   const verticalCoordinate = convertVerticalObject[arrayVerticalCoordinate];
   const result = `${horizontalCoordinate}${verticalCoordinate}`;
-  console.log(result);
   return result;
 };
 
 function kingMoves(str) {
   const kingPosition = convertChessNotationToArray(str);
-  console.log(kingPosition);
   let moves = [];
   moves.push([kingPosition[0] - 1, kingPosition[1] - 1]);
   moves.push([kingPosition[0] - 1, kingPosition[1]]);
@@ -63,13 +62,11 @@ function kingMoves(str) {
   moves.push([kingPosition[0] + 1, kingPosition[1] - 1]);
   moves.push([kingPosition[0] + 1, kingPosition[1]]);
   moves.push([kingPosition[0] + 1, kingPosition[1] + 1]);
-  console.log(moves);
   let x = moves.filter(move => {
     return move[0] >= 0 && move[0] <= 7 && move[1] >= 0 && move[1] <= 7;
   });
   let possibleKingMoves = [];
   x.map(move => possibleKingMoves.push(convertArrayToChessNotation(move)));
-  console.log(possibleKingMoves);
   return possibleKingMoves;
 }
 
@@ -78,7 +75,6 @@ function queenMoves(str) {
   const possibleRookMoves = rookMoves(str);
   const possibleBishopMoves = bishopMoves(str);
   possibleQueenMoves = possibleRookMoves.concat(possibleBishopMoves);
-  console.log(possibleQueenMoves);
   return possibleQueenMoves;
 }
 
@@ -143,7 +139,6 @@ function bishopMoves(str) {
   let possibleBishopMoves = x.filter(pbm => {
     return pbm !== str;
   });
-  console.log(possibleBishopMoves);
   return possibleBishopMoves;
 }
 
@@ -161,13 +156,11 @@ function knightMoves(str) {
   moves.push([vertCoord - 1, horizCoord - 2]);
   moves.push([vertCoord - 2, horizCoord - 1]);
   let possibleKnightmoves = [];
-  console.log(moves);
   moves.map(pkm => {
     return pkm[0] >= 0 && pkm[0] <= 7 && pkm[1] >= 0 && pkm[1] <= 7
       ? possibleKnightmoves.push(pkm)
       : null;
   });
-  console.log(possibleKnightmoves);
   return possibleKnightmoves.map(move => convertArrayToChessNotation(move));
 }
 
@@ -175,7 +168,6 @@ function whitePawnMoves(str) {
   const pawnPosition = convertChessNotationToArray(str);
   let possiblePawnMoves = [];
   possiblePawnMoves.push([pawnPosition[0] - 1, pawnPosition[1]]);
-  console.log(possiblePawnMoves);
   return possiblePawnMoves.map(move => convertArrayToChessNotation(move));
 }
 
@@ -183,7 +175,6 @@ function blackPawnMoves(str) {
   const pawnPosition = convertChessNotationToArray(str);
   let possiblePawnMoves = [];
   possiblePawnMoves.push([pawnPosition[0] + 1, pawnPosition[1]]);
-  console.log(possiblePawnMoves);
   return possiblePawnMoves.map(move => convertArrayToChessNotation(move));
 }
 
