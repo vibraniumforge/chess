@@ -12,13 +12,39 @@ code {
     monospace;
 }
 
-select {
-  margin: 10px;
+.container {
+  width: 80%;
+  height: 200px;
+  margin: auto;
+  padding: 10px;
 }
+
 #input {
   text-align: center;
   padding: 10px;
   margin: 30px;
+  width: 15%;
+  height: 200px;
+  float: left;
+}
+
+#board {
+  text-align: center;
+  width: auto;
+  height: auto;
+  margin-left: 15%;
+  margin-top: 50px;
+  /* height: 200px; */
+}
+
+.chess-input {
+  margin: 10px;
+  width: 150px;
+}
+
+select {
+  margin: 10px;
+  width: 150px;
 }
 
 li {
@@ -27,8 +53,6 @@ li {
 
 .white-square {
   background-color: white;
-  /* width: 10%;
-  height: 10%; */
   width: 70px;
   height: 70px;
   padding: 0px;
@@ -41,12 +65,6 @@ li {
   height: 70px;
   padding: 0px;
   margin: 0px;
-}
-
-#board {
-  text-align: center;
-  width: auto;
-  height: auto;
 }
 
 table {
