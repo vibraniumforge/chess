@@ -5,11 +5,11 @@ import Board from "../components/Board";
 
 class Input extends Component {
   state = {
-    piece1Name: "whitepawn",
+    piece1Name: "rook",
     piece1Coordinates: "b5",
     piece1Result: [],
-    piece2Name: "whitepawn",
-    piece2Coordinates: "a7",
+    piece2Name: "knight",
+    piece2Coordinates: "a6",
     piece2Result: [],
     kingCoordinates: "a8",
     kingResults: [],
@@ -39,7 +39,7 @@ class Input extends Component {
             this.state.piece2Name,
             this.state.piece2Coordinates
           ),
-          kingResults: movesHelper("king", this.state.kingCoordinates)
+          kingResults: movesHelper("blackking", this.state.kingCoordinates)
         },
         () => this.checkmate()
       );
@@ -48,26 +48,39 @@ class Input extends Component {
 
   checkmate = () => {
     console.log("checkmate fires");
-    console.log(this.state);
-    const kingResults = [...this.state.kingResults];
+    console.log("this.state=", this.state);
+    const kingCoordinates = this.state.kingCoordinates.slice();
+    const kingResults = this.state.kingResults.slice();
     const piece1Results = [...this.state.piece1Result];
     const piece2Results = [...this.state.piece2Result];
     const allAttacks = piece1Results.concat(piece2Results);
-    console.log(kingResults);
-    console.log(allAttacks);
-    let kingResults2 = kingResults.slice();
-    if (kingResults2) {
+    console.log("kingCoordinates=", kingCoordinates);
+    console.log("kingResults=", kingResults);
+    console.log("allAttacks=", allAttacks);
+    let kingCoordinates2 = kingCoordinates.slice();
+    let kingIsCheck = false;
+    let kingIsCheckmated = false;
+    if (kingCoordinates2) {
       //   const intersection = kingResults.filter(element =>
       //     allAttacks.includes(element)
       //   );
-      for (let i = 0; i < kingResults2.length; i++) {
-        for (let j = 0; j < allAttacks.length; j++) {
-          if (kingResults2[i] === allAttacks[j]) {
-            kingResults2.splice(i, 1);
-          }
+      console.log("kingCoordinates2=", kingCoordinates2);
+      for (let i = 0; i < allAttacks.length; i++) {
+        if (kingCoordinates2 === allAttacks[i]) {
+          kingIsCheck = true;
         }
       }
-      console.log(kingResults2);
+
+      let filter = kingResults.filter(kr => {
+        return allAttacks.includes(kr);
+      });
+      if (filter.length === kingResults.length) {
+        kingIsCheckmated = true;
+      }
+
+      console.log("kingIsCheched=", kingIsCheck);
+      console.log("filter=", filter);
+      console.log("kingIsCheckmated=", kingIsCheckmated);
       this.setState({ checkMate: "hi" });
     }
   };
