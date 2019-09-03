@@ -10,37 +10,66 @@ class Board extends Component {
     });
   };
 
-  removePiece = () => {
-    const selectedSquare = document.getElementById(this.props.coordinates);
-    return selectedSquare ? (selectedSquare.innerHTML = "") : null;
+  removePiecesFromBoard = () => {
+    const kingCoordinates = document.getElementById(this.props.kingCoordinates);
+    if (kingCoordinates) {
+      kingCoordinates.innerHTML = "";
+    }
+    const piece1Coordinates = document.getElementById(
+      this.props.piece1Coordinates
+    );
+    if (piece1Coordinates) {
+      piece1Coordinates.innerHTML = "";
+    }
+    const piece2Coordinates = document.getElementById(
+      this.props.piece2Coordinates
+    );
+    if (piece2Coordinates) {
+      piece2Coordinates.innerHTML = "";
+    }
   };
 
   colorTheSqaures = () => {
-    console.log(this.props.result);
-    this.props.result.forEach(square => {
+    this.props.piece1Result.forEach(square => {
+      document.getElementById(square).classList.add("selected");
+    });
+    this.props.piece2Result.forEach(square => {
       document.getElementById(square).classList.add("selected");
     });
   };
 
-  addPiece = () => {
-    let selectedSquare = document.getElementById(this.props.coordinates);
-    selectedSquare.innerHTML = pieceHelper(this.props.piece);
+  addPiecesToBoard = () => {
+    const kingCoordinates = document.getElementById(this.props.kingCoordinates);
+    if (kingCoordinates) {
+      kingCoordinates.innerHTML = pieceHelper("king");
+    }
+    const piece1Coordinates = document.getElementById(
+      this.props.piece1Coordinates
+    );
+    if (piece1Coordinates) {
+      piece1Coordinates.innerHTML = pieceHelper(this.props.piece1Name);
+    }
+    const piece2Coordinates = document.getElementById(
+      this.props.piece2Coordinates
+    );
+    if (piece2Coordinates) {
+      piece2Coordinates.innerHTML = pieceHelper(this.props.piece2Name);
+    }
   };
 
+  //   piece1Coordinates={this.state.piece1Coordinates}
+  //   piece1Name={this.state.piece1Name}
+  //   piece2Coordinates={this.state.piece2Coordinates}
+  //   piece2Name={this.state.piece2Name}
+  //   kingCoordinates={this.state.kingCoordinates}
+  //   result={this.state.result}
+
   render() {
-    if (
-      this.props.coordinates.length === 2 &&
-      this.props.coordinates &&
-      this.props.result !== [] &&
-      this.props.result.length &&
-      this.props.result &&
-      this.props.piece !== "" &&
-      this.props.piece
-    ) {
+    if (this.props.piece1Result && this.props.piece2Result) {
       this.uncolorTheSquares();
-      this.removePiece();
+      this.removePiecesFromBoard();
       this.colorTheSqaures();
-      this.addPiece();
+      this.addPiecesToBoard();
     }
     return (
       <React.Fragment>
