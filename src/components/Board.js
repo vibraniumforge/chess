@@ -41,7 +41,7 @@ class Board extends Component {
   addPiecesToBoard = () => {
     const kingCoordinates = document.getElementById(this.props.kingCoordinates);
     if (kingCoordinates) {
-      kingCoordinates.innerHTML = pieceHelper("king");
+      kingCoordinates.innerHTML = pieceHelper("blackking");
     }
     const piece1Coordinates = document.getElementById(
       this.props.piece1Coordinates
@@ -56,13 +56,6 @@ class Board extends Component {
       piece2Coordinates.innerHTML = pieceHelper(this.props.piece2Name);
     }
   };
-
-  //   piece1Coordinates={this.state.piece1Coordinates}
-  //   piece1Name={this.state.piece1Name}
-  //   piece2Coordinates={this.state.piece2Coordinates}
-  //   piece2Name={this.state.piece2Name}
-  //   kingCoordinates={this.state.kingCoordinates}
-  //   result={this.state.result}
 
   render() {
     if (this.props.piece1Result && this.props.piece2Result) {
