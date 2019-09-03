@@ -1,7 +1,9 @@
 const pieceHelper = piece => {
   switch (piece) {
-    case "king":
+    case "whiteking":
       return "&#9812;";
+    case "blackking":
+      return "&#9818;";
     case "queen":
       return "&#9813;";
     case "rook":
