@@ -46,15 +46,8 @@ const convertArrayToChessNotation = array => {
   const horizontalCoordinate =
     convertHorizontalObject[arrayHorizontalCoordinate];
   const verticalCoordinate = convertVerticalObject[arrayVerticalCoordinate];
-  console.log(array);
-  console.log(arrayVerticalCoordinate);
-  console.log(arrayHorizontalCoordinate);
-  console.log(horizontalCoordinate);
-  console.log(verticalCoordinate);
-
   const result = `${horizontalCoordinate}${verticalCoordinate}`;
   console.log(result);
-  console.log("=================================");
   return result;
 };
 
@@ -159,10 +152,6 @@ function knightMoves(str) {
   let moves = [];
   const vertCoord = knightPosition[0];
   const horizCoord = knightPosition[1];
-
-  console.log("knightPosition=", knightPosition);
-  console.log("horizCoord=", horizCoord);
-  console.log("vertCoord=", vertCoord);
   moves.push([vertCoord - 2, horizCoord + 1]);
   moves.push([vertCoord - 1, horizCoord + 2]);
   moves.push([vertCoord + 1, horizCoord + 2]);
