@@ -3,7 +3,7 @@ import { pieceHelper } from "../helpers/pieceHelper.js";
 
 class Board extends Component {
   uncolorTheSquares = () => {
-    let coloredSqaures = document.getElementsByClassName("selected");
+    const coloredSqaures = document.getElementsByClassName("selected");
     let coloredSqauresArray = Array.from(coloredSqaures);
     coloredSqauresArray.forEach(square => {
       square.classList.remove("selected");
