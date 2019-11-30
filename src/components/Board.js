@@ -58,9 +58,9 @@ class Board extends Component {
   };
 
   render() {
+    this.uncolorTheSquares();
+    this.removePiecesFromBoard();
     if (this.props.piece1Result && this.props.piece2Result) {
-      this.uncolorTheSquares();
-      this.removePiecesFromBoard();
       this.colorTheSqaures();
       this.addPiecesToBoard();
     }

@@ -90,7 +90,17 @@ class Input extends Component {
   };
 
   reset = () => {
-    this.setState({ coordinates: "", piece: "", result: [] });
+    this.setState({
+      piece1Coordinates: "",
+      piece1Result: [],
+      piece2Name: "",
+      piece2Coordinates: "",
+      piece2Result: [],
+      kingCoordinates: "",
+      kingResults: [],
+      kingIsChecked: null,
+      kingIsCheckMated: null
+    });
   };
 
   render() {
